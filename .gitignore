@@ -2,7 +2,7 @@ node_modules/
 public/javascripts/Math/
 public/javascripts/mathjax/
 public/stylesheets/hljs/
-view/archive/
+views/archive/
 data/
 tmp/
 *~
