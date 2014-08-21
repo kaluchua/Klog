@@ -1,0 +1,14 @@
+div.units-row.end
+  div.unit-centered.unit-60#main
+
+    div.units-row
+      div.unit-centered.unit-100
+        div#markdown
+          if mark
+            span#custom !{mark}
+          else
+            p Nothing to render
+
+    div.units-row
+      div.unit-centered.unit-100
+          include ./form_up.jade

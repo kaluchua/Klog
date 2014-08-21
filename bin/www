@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+var debug = require('debug')('formMarked');
+var app   = require('../app');
+var http  = require('http');
+var reload = require('reload');
+
+app.set('port', process.env.PORT || 3000);
+/*
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+*/
+var server = http.createServer(app);
+
+//reload code here
+reload(server, app, 500);
+
+server.listen(app.get('port'), function(){
+  debug("Web server listening on port " + app.get('port'));
+});
+

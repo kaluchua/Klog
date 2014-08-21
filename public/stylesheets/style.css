@@ -1,0 +1,281 @@
+/**** FONT ****/
+@font-face {
+  font-family: "Dust";
+  src: url('font/dust.ttf');
+}
+
+@font-face {
+  font-family: "Chunk";
+  src: url('font/Chunkfive.otf');
+}
+/************/
+
+
+#topline {
+  height:     2px;
+  background: black;
+}
+
+#heading-top {
+  background:  #000080;
+  color: white;
+}
+
+#heading {
+  padding-top: 10px;
+  font-family: "Dust";
+  font-size:   400%;
+  margin-left: 150px;
+  background:  #000080;
+  color: white;
+}
+
+#slogan {
+  font-family: "Dust";
+  color:       gray;
+  font-weight: bold;
+  font-size:   150%;
+  margin-left: 120px;
+  margin-top:  -10px;
+}
+
+div div nav ul li {
+  background: white;
+}
+
+
+#navig ul li * {
+  font-family: "Chunk";
+  font-size: 145%;
+  font-weight: bold;
+  color: #197519;
+}
+
+#navig ul li a:hover {
+  font-family: "Chunk";
+/*  font-size: 175%; */
+  font-weight: bold;
+  color: red;
+}
+
+
+#navig ul li span * {
+  color: #7A00A3;
+  font-size: 105%;
+}
+
+#navig-foot {
+  margin-top: 0px;
+  padding-top: 0px;
+  height: 2px;
+  background: #003D3D;
+}
+
+
+.marg {
+  margin-left: 1em;
+}
+
+
+.last {
+  float: right;
+}
+
+
+#index {
+  background: #fff;
+}
+
+
+#main {
+  background: #fff;
+}
+
+
+/***********************************/
+/***********************************/
+
+/*
+#stick {
+  height: 10px;
+  background: black;
+}
+#00001A, #000080, #0000E6, #4D4DFF, #B2B2FF
+*/
+
+#stick1 {
+  height: 10px;
+  background: #00001A;
+}
+#stick2 {
+  height: 10px;
+  background: #000080;
+}
+#stick3 {
+  height: 10px;
+  background: #0000E6;
+}
+#stick4 {
+  height: 10px;
+  background: #4D4DFF;
+}
+
+/******************************/
+#substick1 {
+  height: 10px;
+  background: #B2B2FF;
+}
+#substick2 {
+  height: 10px;
+  background: #CCE0E0;
+}
+/******************************/
+
+#stick6 {
+  height: 10px;
+  background: #66A3A3;
+}
+#stick7 {
+  height: 10px;
+  background: #006666;
+}
+#stick8 {
+  height: 10px;
+  background: #003D3D;
+}
+#stick9 {
+  height: 10px;
+  background: #001414;
+}
+
+
+
+/***********************************/
+/***********************************/
+/***********************************/
+
+#markdown p {
+  margin-bottom: 15px;
+}
+
+#markdown pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  background: #f0f0f0;
+  margin-bottom: 15px;
+  margin-left: 25px;
+  margin-right: 25px;
+  border-top-right-radius:    10px;
+  border-top-left-radius:     10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius:  10px;
+}
+
+
+
+#markdown code {
+  margin: 0px;
+  padding: 10px;
+  border: 0;
+  font-size: 100%;
+  background: #f0f0f0;
+}
+
+/**********************************/
+/**********************************/
+/**********************************/
+
+#custom pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+}
+
+
+#custom code {
+  margin: 0px;
+  padding: 10px;
+  border: 0;
+  font-size: 100%;
+  border-top-right-radius:    5px;
+  border-top-left-radius:     5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius:  5px;
+}
+
+#heading * {
+  text-align: center;
+}
+
+#footed {
+   position: fixed;
+   right:     20%;
+   left:     20%;
+   bottom:   -3px;
+   height:   30px;
+   background:#999;
+   width:60%;
+}
+
+
+
+#btn_titre {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+
+}
+
+#btn_titre {
+  border-top: 1px solid #1E90FF;
+  border-right: 1px solid #1E90FF;
+  border-bottom: 1px solid #1E90FF;
+  border-left: 1px solid #1E90FF;
+}
+
+
+#text_zone {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+
+}
+
+#text_zone {
+  border-top: 1px solid #1E90FF;
+  border-right: 1px solid #1E90FF;
+  border-bottom: 1px solid #1E90FF;
+  border-left: 1px solid #1E90FF;
+}
+
+
+
+
+/*
+#btn_titre {
+  border-top-radius(50px);
+}
+*/
+
+/* #footed div span { color: green; }
+
+#footed div {
+  background: black;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+  padding: 15px 0 0 0;
+  vertical-align: center;
+  border: #000 1px solid;
+}
+
+#bidon {
+  overflow: hidden;
+}
+*/

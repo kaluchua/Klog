@@ -1,0 +1,73 @@
+extends header
+
+block content
+  div.units-row.end#topline
+    div.unit-centered.unit-100
+
+  div.units-row.end
+    div.unit-centered.unit-100
+
+      a(href='/')
+        div.units-row.end
+          div.unit-push-60.unit-30
+            hgroup
+              h1.italic#heading= title
+              h1.subheading#slogan Culture Animal
+
+  div.units-row.units-split#sticker
+    div.unit-10#stick1
+    div.unit-10#stick2
+    div.unit-10#stick3
+    div.unit-10#stick4
+    div.unit-20
+      div.units-row.units-split
+        div.unit-50#substick1
+        div.unit-50#substick2
+    div.unit-10#stick6
+    div.unit-10#stick7
+    div.unit-10#stick8
+    div.unit-10#stick9
+
+
+
+
+
+  div.units-row.end
+    div.unit-centered.unit-60#main
+
+
+
+      div.units-row.end.text-centered
+        div.unit-centered.unit-100.end
+
+
+          p.bold
+            | sladkjas ldkjasl asdlkjasd lkasjd ldk ldj lasdkj alsdkjas dlkj asljdlk
+            | sladkjas ldkjasl asdlkjasd lkasjd ldk ldj lasdkj alsdkjas dlkj asljdlk
+            | sladkjas ldkjasl asdlkjasd lkasjd ldk ldj lasdkj alsdkjas dlkj asljdlk
+            | sladkjas ldkjasl asdlkjasd lkasjd ldk ldj lasdkj alsdkjas dlkj asljdlk
+            | asdjlasldk asdjlad jaskl jasldkj class
+
+
+      div.units-row
+        div.unit-centered.unit-100
+          div#markdown
+            if mark
+              span#custom !{mark}
+            else
+              p Nothing to render
+
+      div.units-row
+        div.unit-centered.unit-100
+          include ./form_up.jade
+
+//
+//      div.units-row.units-split#footed
+//        div.unit-25.bold
+//          span COUCOU1
+//        div.unit-25.bold
+//          span COUCOU1
+//        div.unit-25.bold
+//          span COUCOU1
+//        div.unit-25.bold
+//          span COUCOU1

@@ -1,0 +1,20 @@
+script('text/javascript').
+  var renderIt = function() {
+    try {
+      $("#markdown").empty();
+      var raw_text = $("textarea#text_zone").val();
+      var rendu = marked(raw_text);
+      $("#markdown").append(rendu);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+form(method="post" action="/raw" class="forms")
+  textarea(id="text_zone" rows="6" class="width-100" name="text")
+  p
+    | #[button.btn-green.width-15(name="push"  value="push") Submit]
+    | #[span.marg #[button.btn-yellow.width-15(name="save" value="save") Save]]
+    | #[span.last #[button.btn-black.width-15(type='reset' value='reset') Clear]]
+
+p #[span.left #[button(onclick="renderIt();") Preview]]

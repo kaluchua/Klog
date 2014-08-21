@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/kube.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/hljs/default.css')
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js')
+    script(src='/javascripts/marked.min.js')
+    script(src='/javascripts/highlight.pack.js')
+    script(type='text/javascript').
+      hljs.initHighlightingOnLoad();
+
+
+  body#index
+    block header
