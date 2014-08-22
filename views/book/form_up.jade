@@ -1,0 +1,38 @@
+script('text/javascript').
+  var renderIt = function() {
+    try {
+      $("#markdown").empty();
+      var raw_text = $("textarea#text_zone").val();
+      var rendu = marked(raw_text);
+      $("#markdown").append(rendu);
+      $("#markdown pre code").each(function(i, b){
+        hljs.highlightBlock(b);
+      });
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+form(method="post" action="/" class="forms")
+
+  label.bold.end.btn_titre
+    | Titre #[span.req *]
+    input(type='text' name='titre' required id='btn_titre')
+
+  ul.forms-inline-list.bold.last.end
+    li #[p]
+    li
+      input(type='checkbox' name='m1' value='m1' id='m1' checked)
+      label(style='font-style: normal;') Markdown
+    li
+      input(type='checkbox' name='m2' value='m2' id='m2')
+      label(style='font-style: normal;') Raw Text
+
+  textarea(id="text_zone" rows="6" class="width-100" name="text")
+  p
+    | #[p]
+    | #[button.btn-green.width-15(name="push"  value="push") Submit]
+    | #[span.marg #[button.btn-yellow.width-15(name="save" value="save") Save]]
+    | #[span.last #[button.btn-black.width-15(type='reset' value='reset') Clear]]
+
+p #[span.left #[button(onclick="renderIt();") Preview]]

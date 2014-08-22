@@ -27,8 +27,14 @@ router.get('/book/preview', function (req, res){
 
 /************************/
 /* *** HOME ROUTING *** */
+
+router.get('/', function(req, res) {
+  res.redirect('/index');
+});
+
+
 router.get('/index', function(req, res) {
-  res.render('layout', { title: 'Kaluchua' });
+  res.render('layout', { title: _titre });
 });
 
 module.exports = router;
