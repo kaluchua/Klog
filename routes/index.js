@@ -13,13 +13,56 @@ router.get('/book/index', function(req, res) {
   res.render('book/index', {title: _titre});
 });
 
+/*********************************************/
+
 router.get('/book/new', function (req, res){
   res.render('book/new', {title: _titre});
 });
 
-router.get('/book/preview', function (req, res){
-  res.render('book/preview', {title: _title});
+router.post('/book/new', function (req, res){
+/*
+  console.log(req.body.ntitre);
+  console.log(req.body.ntags);
+  console.log(req.body.text);
+  console.log(req.body.fmt_markdown);
+*/
+  format = (req.body.fmt_markdown) ? "markdown" : "raw";
+  console.log(format);
+
+  req.session.data = {
+    title: _titre,
+    titre: req.body.ntitre,
+    tags:  req.body.ntags,
+    format: format,
+    text:  req.body.text,
+  };
+
+  res.redirect('/book/preview');
 });
+
+/*********************************************/
+
+router.get('/book/preview', function (req, res){
+  data = req.session.data;
+  console.log(data.tags);
+  if (data.format == "markdown") {
+    data.text = marked(data.text, function (e, d) { return d; });
+  }
+  console.log(data.text);
+  res.render('book/preview', data);
+});
+
+router.post('/book/preview', function (req, res){
+  console.log(req.body.save);
+  if (req.body.save) {
+    res.redirect('/book/index');
+  } else {
+    res.redirect('/book/new');
+  }
+});
+
+/*********************************************/
+
 /************************/
 /************************/
 

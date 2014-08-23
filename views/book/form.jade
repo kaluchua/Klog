@@ -1,0 +1,25 @@
+form(method="post" action="new" class="forms")
+
+  div.units-row.end
+    div.unit-40
+      label.bold.end.btn_titre
+        | Titre #[span.req *]
+        input(type='text' name='ntitre' placeholder='Title' required id='btn_titre')
+    div.unit-50
+      label.bold.end.btn_titre
+        | Tag list #[span.req *]
+        input(type='text' name='ntags' placeholder='tags' required id='btn_tag_list')
+
+  ul.forms-inline-list.bold.last.end
+    li #[p]
+    li
+      input(type='checkbox' name='fmt_markdown' checked)
+      label(style='font-style: normal;') Markdown
+    li
+      input(type='checkbox' name='m2' value='m2' id='m2')
+      label(style='font-style: normal;') Raw Text
+
+  textarea.width-100(id="text_zone" rows="10" name="text")
+  p
+    | #[button.btn-green.width-25(name="push"  value="push") Preview]
+    | #[button.btn-black.width-25(type='reset' value='reset') Clear]
