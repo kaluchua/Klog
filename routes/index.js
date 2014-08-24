@@ -4,56 +4,71 @@ var filer   = require('./stack');
 var session = require('express-session');
 var router  = express.Router();
 
-
 var _titre = 'Kaluchua';
 
-/************************/
+/*********************************************/
 /* *** BOOK ROUTING *** */
+
 router.get('/book/index', function(req, res) {
+  req.session.last_url = req.session.new_url;
+  req.session.new_url  = '/book/index';
+
   res.render('book/index', {title: _titre});
 });
 
 /*********************************************/
+/*********************************************/
 
 router.get('/book/new', function (req, res){
+  req.session.last_url = req.session.new_url;
+  req.session.new_url  = '/book/new';
+
+  if (req.session.last_url == '/book/preview') {
+    console.log('Come from preview');
+    article_content = req.session.data.text_raw;
+    article_titre   = req.session.data.titre;
+    article_tags    = req.session.data.tags;
+    res.render('book/new', {
+      title: _titre,
+      content: article_content,
+      titre:   article_titre,
+      tags:    article_tags,
+    });
+  }
+  req.session.last_url = '/book/new';
   res.render('book/new', {title: _titre});
 });
 
+
 router.post('/book/new', function (req, res){
-/*
-  console.log(req.body.ntitre);
-  console.log(req.body.ntags);
-  console.log(req.body.text);
-  console.log(req.body.fmt_markdown);
-*/
   format = (req.body.fmt_markdown) ? "markdown" : "raw";
-  console.log(format);
 
   req.session.data = {
-    title: _titre,
-    titre: req.body.ntitre,
-    tags:  req.body.ntags,
-    format: format,
-    text:  req.body.text,
+    title:    _titre,
+    titre:    req.body.ntitre,
+    tags:     req.body.ntags,
+    format:   format,
+    text_raw: req.body.text,
   };
 
   res.redirect('/book/preview');
 });
 
 /*********************************************/
+/*********************************************/
 
 router.get('/book/preview', function (req, res){
+  req.session.last_url = req.session.new_url;
+  req.session.new_url  = '/book/preview';
+
   data = req.session.data;
-  console.log(data.tags);
   if (data.format == "markdown") {
-    data.text = marked(data.text, function (e, d) { return d; });
+    data.text_fmt = marked(data.text_raw, function (e, d) { return d; });
   }
-  console.log(data.text);
   res.render('book/preview', data);
 });
 
 router.post('/book/preview', function (req, res){
-  console.log(req.body.save);
   if (req.body.save) {
     res.redirect('/book/index');
   } else {
@@ -62,13 +77,10 @@ router.post('/book/preview', function (req, res){
 });
 
 /*********************************************/
-
-/************************/
-/************************/
+/*********************************************/
 
 
-
-/************************/
+/*********************************************/
 /* *** HOME ROUTING *** */
 
 router.get('/', function(req, res) {
@@ -77,12 +89,16 @@ router.get('/', function(req, res) {
 
 
 router.get('/index', function(req, res) {
+  req.session.last_url = req.session.new_url;
+  req.session.new_url = '/index';
+
   res.render('layout', { title: _titre });
 });
 
 module.exports = router;
 
 /*
+
 router.get('/raw', function(req, res) {
     res.redirect('/');
 });
@@ -114,15 +130,11 @@ router.post('/', function(req, res) {
   res.redirect('/view');
 });
 
-
 router.get('/view', function(req, res) {
   data = req.session.data;
   console.log(JSON.stringify(data));
   res.render('article', data);
 });
-
-
-
 
   marked(req.body.text, function (err, content) {
     if (err) throw err;

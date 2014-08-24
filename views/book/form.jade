@@ -1,14 +1,24 @@
+mixin default_input(_name, _place, _value)
+  input(type='text' name=_name placeholder=_place value=_value required)
+
 form(method="post" action="new" class="forms")
 
   div.units-row.end
     div.unit-40
       label.bold.end.btn_titre
         | Titre #[span.req *]
-        input(type='text' name='ntitre' placeholder='Title' required id='btn_titre')
+        if titre
+          +default_input('ntitre', 'titre', titre )
+        else
+          +default_input('ntitre', 'titre', '')
+
     div.unit-50
       label.bold.end.btn_titre
         | Tag list #[span.req *]
-        input(type='text' name='ntags' placeholder='tags' required id='btn_tag_list')
+        if tags
+          +default_input('ntags', 'tags', tags)
+        else
+          +default_input('ntags', 'tags', '')
 
   ul.forms-inline-list.bold.last.end
     li #[p]
@@ -20,6 +30,9 @@ form(method="post" action="new" class="forms")
       label(style='font-style: normal;') Raw Text
 
   textarea.width-100(id="text_zone" rows="10" name="text")
-  p
-    | #[button.btn-green.width-25(name="push"  value="push") Preview]
-    | #[button.btn-black.width-25(type='reset' value='reset') Clear]
+    if content
+      !{content}
+  button.btn-green.width-25(name="push" value="push") Preview
+
+form(action='index' method='GET')
+  button.btn-black.width-25(name="goBack" value="goBack") Go Back

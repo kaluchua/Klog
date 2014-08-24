@@ -3,19 +3,6 @@ extends ../layout
 
 block content
 
-  script("text/javascript").
-    var render = function () {
-      alert('coco');
-      try {
-        $("#markdown pre code").each(function(i, b){
-          hljs.highlightBlock(b);
-        });
-      } catch (err) {
-        alert(err);
-      }
-    }
-
-
   div.units-row
     div.unit-60.unit-centered
 
@@ -25,13 +12,12 @@ block content
             button.btn-green.width-25(name="edit" value="Edit" id="edit") Edit
             button.btn-yellow.width-25(name="save" value="Save" id='save' ) Save
 
-
       div.units-row
         div.unit-centered.unit-100
           h1 #{titre}
 
           div#markdown
-            span#custom !{text}
+            span#custom !{text_raw}
 
 
 
