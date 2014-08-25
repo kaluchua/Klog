@@ -1,41 +1,18 @@
 var path = require('path');
-var os = require('os');
+var os   = require('os');
 var fs   = require('fs');
-var bCrypt = require('bcrypt-nodejs');
+var sha256  = require('sha256').x2;
 
-var bullet = {
-  state: true,
-  value: 0,
-  info: ''
-};
+var _data_dir = 'data';
 
-var createHash = function(password) {
-  return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-};
+function fileName(titre){
+  var _hash = sha256(titre);
+  return path.join(path.join(process.cwd(), _data_dir), _hash);
+}
 
-var close_fd = function(fd) {
-  try {
-    fs.closeSync(fd);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
-module.exports = function (name, data) {
-/*  var filecode  = createHash(titlebCrypt.genSaltSync(10); */
-  var filetime  = Number(os.uptime() * 1000 * 1000).toFixed().toString();
-  var filetitle = name + '_' + filetime;
-  var filedata  = data;
-  var filemode  = 'w';
-  var filename  = path.join(path.join(process.cwd(), 'data'), filetitle);
-
-  // Using fs.exists is supposed to expose to race condition
-  fs.existsSync(filename, function (exists) { if (exists) throw err;});
-
-  var fd  = fs.openSync(filename, filemode);
-  var len = fs.writeSync(fd, filedata);
+module.exports = function (data) {
+  var fd  = fs.openSync(fileName(data.titre), 'w');
+  var len = fs.writeSync(fd, JSON.stringify(data));
   var t   = fs.closeSync(fd);
   return len;
- };
-
+};

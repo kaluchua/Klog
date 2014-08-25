@@ -1,0 +1,10 @@
+## Before first release
+  Use highlight on server side
+  Remove useless javascript library
+  Clean css files.
+  Normalize variable name between view and code
+  Create footer
+  Create an index for each category
+  Create a file for global variable
+  Design extends object base approch
+  file archiver

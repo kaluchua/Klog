@@ -6,6 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var routes       = require('./routes/index');
 var session      = require('express-session');
+var path         = require('path');
+var fs           = require('fs');
+
+
 
 var app = express();
 
@@ -26,6 +30,21 @@ app.use(session({
   resave: true}));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function (req, res, next) {
+  if (req.session.loaded) {
+    next();
+  } else {
+    var _dir           = path.join(process.cwd(),'data');
+    files              = fs.readdirSync(_dir);
+    req.session.files  = files;
+//    console.log(_dir);
+//    files.forEach(function (x) { console.log(x);});
+    req.session.loaded = true;
+    next();
+  }
+});
+
 
 // routes loading
 app.use('/', routes);
@@ -61,6 +80,4 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
-// asdsd
 module.exports = app;
