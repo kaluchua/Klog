@@ -30,7 +30,7 @@ form(method="post" action="new" class="forms")
       label(style='font-style: normal;') Raw Text
 
   textarea.width-100(id="text_zone" rows="10" name="text")
-    if content
+    if (content)
       !{content}
   button.btn-green.width-25(name="push" value="push") Preview
 

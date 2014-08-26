@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var routes       = require('./routes/index');
 var session      = require('express-session');
+var flash        = require('connect-flash');
 var path         = require('path');
 var fs           = require('fs');
-
 
 
 var app = express();
@@ -29,6 +29,8 @@ app.use(session({
   saveUninitialized: true,
   resave: true}));
 
+app.use(flash());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
@@ -37,7 +39,7 @@ app.use(function (req, res, next) {
   } else {
     var _dir           = path.join(process.cwd(),'data');
     files              = fs.readdirSync(_dir);
-    req.session.files  = files;
+    req.session.files  = files.sort().reverse();
 //    console.log(_dir);
 //    files.forEach(function (x) { console.log(x);});
     req.session.loaded = true;
