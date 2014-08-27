@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+
+  a(href='/book/new' style='text-decoration: none;')
+    div.units-row
+      div.unit-40.unit-centered.bold(style='height: 60px; background: #eee')
+        p.text-centered#article_create Create a new entry
+
+  div.units-row
+    div.unit-60.unit-centered
+      ul
+        - for (k in lines)
+          li #{lines[k]}
+
+
+  div.units-row
+    div.unit-60.unit-centered
+
+      div.units-row#article_box
+        div.unit-20.article_head.text-centered
+          p This is article head
+        div.unit-100.article_content.text-centered
+          h4 Fucking stuff
+          p this stuff deal with
+
+
+      div.units-row.units-split.article_box
+        div.unit-10.text-centered.article_heads
+          p This is article head
+
+        div.unit-90
+          div.units-row.end.article_contents
+            div.unit-100.text-centered
+              h4 Fucking stuff
+              p this stuff deal with
+
+          div.units-row.end.article_tags
+            div.unit-100
+              p ...
+
+

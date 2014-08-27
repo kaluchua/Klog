@@ -10,6 +10,13 @@ var fs      = require('fs');
 
 var router  = express.Router();
 
+/*
+ * VARIABLE CONVENTION
+ * globale variable begin as `__var`
+ * locals variable begin as `_var`
+ * argunent variable `var`
+ */
+
 var _titre = 'Kaluchua';
 
 /*********************************************/
@@ -18,25 +25,45 @@ var _titre = 'Kaluchua';
 /* INDEX *************************************/
 
 var __indexSize = 8;
+var __encoding  = 'utf-8';
+var __data_dir = 'data';
 
 function array_select(start, len, array){
   return array.slice(start*len,(++start)*len);
 }
 
-
 router.get('/book/index', function(req, res) {
-  req.session.last_url = req.session.new_url;
-  req.session.new_url  = '/book/index';
+  res.redirect('/book/index/0');
+});
+
+
+router.get('/book/index/:page', function(req, res) {
+  req.session.last_url          = req.session.new_url;
+  req.session.new_url           = '/book/index';
+
+  var offset = Number(req.params.page); console.log(typeof(offset));
+  var _files = req.session.files.sort().reverse();
+  var size = _files.length;
 
   if (req.session.last_url === '/book/preview') {
-    var _files = req.session.files.sort().reverse();
-    var _lines = array_select(0, __indexSize, _files);
-
-    _lines.forEach(function (x) { console.log(x);});
-    res.render('book/index', {title: _titre, lines: _lines});
-  } else {
-    res.render('book/index', {title: _titre});
+    req.session.book_index.offset = 0;
+    req.session.files.sort().reverse();
   }
+
+  var _lines = array_select(offset, __indexSize, _files).map(function(file) {
+      var _file = path.join(path.join(process.cwd(), __data_dir), file);
+      var content = JSON.parse(fs.readFileSync(_file, __encoding));
+      return {titre: content.titre, tags: content.tags};
+    });
+
+  var _pager = {
+    hasPrevious: (offset > 0) ? ('/book/index/' + (--offset)) : false,
+    hasNext: ((offset * __indexSize) < size) ? ('/book/index/' + (++offset)) : false,
+    whichOne: offset,
+    pagesNumber: size % __indexSize
+  };
+
+  res.render('book/index', {title: _titre, lines: _lines, pager: _pager});
 });
 
 

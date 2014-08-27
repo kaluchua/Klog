@@ -2,41 +2,48 @@ extends ../layout
 
 block content
 
-  a(href='/book/new' style='text-decoration: none;')
-    div.units-row
-      div.unit-40.unit-centered.bold(style='height: 60px; background: #eee')
+  mixin default_box(_titre, _tags)
+    div.units-row.units-split.article_box
+      div.unit-10.text-centered.article_heads
+        p This is article head
+      div.unit-90
+        div.units-row.end.article_contents
+          div.unit-100.text-centered
+            h4 #{_titre}
+            p this stuff deal with
+        div.units-row.end.article_tags
+          div.unit-100
+            p #{_tags}
+
+  mixin funPrev(_link)
+    a(href=_link) <<
+
+  mixin funNext(_link)
+    a(href=_link) >>
+
+  mixin funPager(_page, _next, _pred, _num)
+    p
+      span
+        if _pred
+          +funPrev(_pred)
+      span.last
+        if _next
+          +funNext(_next)
+    p
+      span Page number #{_page} in #{_num} pages
+
+
+  div.units-row
+    div.unit-40.unit-centered.bold(style='height: 60px; background: #eee')
+      a(href='/book/new' style='text-decoration: none;')
         p.text-centered#article_create Create a new entry
 
   div.units-row
     div.unit-60.unit-centered
-      ul
-        - for (k in lines)
-          li #{lines[k]}
-
+      - for (k in lines)
+        +default_box(lines[k].titre, lines[k].tags)
 
   div.units-row
     div.unit-60.unit-centered
-
-      div.units-row#article_box
-        div.unit-20.article_head.text-centered
-          p This is article head
-        div.unit-100.article_content.text-centered
-          h4 Fucking stuff
-          p this stuff deal with
-
-
-      div.units-row.units-split.article_box
-        div.unit-10.text-centered.article_heads
-          p This is article head
-
-        div.unit-90
-          div.units-row.end.article_contents
-            div.unit-100.text-centered
-              h4 Fucking stuff
-              p this stuff deal with
-
-          div.units-row.end.article_tags
-            div.unit-100
-              p ...
-
+      +funPager(pager.whichOne, pager.hasNext, pager.hasPrevious, pager.pagesNumber)
 

@@ -48,6 +48,17 @@ app.use(function (req, res, next) {
 });
 
 
+app.use(function (req, res, next) {
+  if (req.session.last_url) {
+    next();
+  } else {
+   req.session.last_url = '/';
+   req.session.new_url  = '/';
+   res.redirect('/index');
+  }
+});
+
+
 // routes loading
 app.use('/', routes);
 
