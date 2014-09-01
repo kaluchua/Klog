@@ -1,16 +1,19 @@
 extends ../layout
 
 block content
+  mixin funLink(_link)
+    a(href=_link)
 
-  mixin default_box(_titre, _tags)
+  mixin default_box(_titre, _tags, _link)
     div.units-row.units-split.article_box
       div.unit-10.text-centered.article_heads
         p This is article head
       div.unit-90
         div.units-row.end.article_contents
           div.unit-100.text-centered
-            h4 #{_titre}
-            p this stuff deal with
+            a(href=_link)
+              h4 #{_titre}
+              p this stuff deal with
         div.units-row.end.article_tags
           div.unit-100
             p #{_tags}
@@ -41,7 +44,7 @@ block content
   div.units-row
     div.unit-60.unit-centered
       - for (k in lines)
-        +default_box(lines[k].titre, lines[k].tags)
+        +default_box(lines[k].titre, lines[k].tags, lines[k].ref)
 
   div.units-row
     div.unit-60.unit-centered

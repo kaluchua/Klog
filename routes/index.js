@@ -1,12 +1,10 @@
 var express = require('express');
 var marked  = require('marked');
-// var filer   = require('./stack');
 var session = require('express-session');
 var os      = require('os');
 var sha256  = require('sha256').x2;
 var path    = require('path');
 var fs      = require('fs');
-
 
 var router  = express.Router();
 
@@ -17,16 +15,61 @@ var router  = express.Router();
  * argunent variable `var`
  */
 
-var _titre = 'Kaluchua';
+var __titre     = 'Kaluchua';
+var __indexSize = 8;
+var __encoding  = 'utf-8';
+var __dir       = 'data';
+var __data_dir  = path.join(process.cwd(), __dir);
 
 /*********************************************/
 /* BOOK ROUTING *****************************/
 
+
+/* ARTICLE *************************************/
+
+router.get('/book/article', function(req, res) {
+  res.redirect('/book/index/0');
+});
+
+
+router.get('/book/article/:idx', function(req, res) {
+  req.session.last_url          = req.session.new_url;
+  req.session.new_url           = '/book/article';
+
+  var _index = Number(req.params.idx);
+  var _file  = path.join(__data_dir, req.session.files[_index]);
+  var _data  = JSON.parse(fs.readFileSync(_file));
+
+  _data.title = __titre;
+  if (_data.format == "markdown") {
+    _data.content = marked(_data.content, function (e, d) { return d; });
+  }
+
+  res.render('book/article', _data);
+});
+
+
+
+
 /* INDEX *************************************/
 
-var __indexSize = 8;
-var __encoding  = 'utf-8';
-var __data_dir = 'data';
+function mult0(nb, module) {
+  if (module >= nb) {
+    return 1;
+  } else {
+    var i=1;
+    while (nb > module) {
+      i=i+1; nb=nb-module;
+    }
+    return i;
+  }
+}
+
+// good thing to write test case
+function mult(nb, module) {
+  // to ensure terminaison
+  return mult0(Math.abs(nb), Math.abs(module));
+}
 
 function array_select(start, len, array){
   return array.slice(start*len,(++start)*len);
@@ -41,29 +84,36 @@ router.get('/book/index/:page', function(req, res) {
   req.session.last_url          = req.session.new_url;
   req.session.new_url           = '/book/index';
 
-  var offset = Number(req.params.page); console.log(typeof(offset));
-  var _files = req.session.files.sort().reverse();
-  var size = _files.length;
+  var _offset = (req.params.page) ? Number(req.params.page) : 0;
+//  var _files = req.session.files.sort().reverse();
+  var _files = req.session.files;
+  var _size = _files.length;
 
+/*
   if (req.session.last_url === '/book/preview') {
-    req.session.book_index.offset = 0;
     req.session.files.sort().reverse();
   }
+*/
 
-  var _lines = array_select(offset, __indexSize, _files).map(function(file) {
-      var _file = path.join(path.join(process.cwd(), __data_dir), file);
+  var _counter = 0;
+  var _lines = array_select(_offset, __indexSize, _files).map(function(file) {
+      var _file = path.join(__data_dir, file);
       var content = JSON.parse(fs.readFileSync(_file, __encoding));
-      return {titre: content.titre, tags: content.tags};
+      return {
+        titre: content.titre,
+        tags: content.tags,
+        ref: '/book/article/' + ((_counter++) + __indexSize * _offset),
+      };
     });
 
   var _pager = {
-    hasPrevious: (offset > 0) ? ('/book/index/' + (--offset)) : false,
-    hasNext: ((offset * __indexSize) < size) ? ('/book/index/' + (++offset)) : false,
-    whichOne: offset,
-    pagesNumber: size % __indexSize
+    hasPrevious: (_offset > 0) ? ('/book/index/' + (_offset - 1)) : false,
+    hasNext: (((_offset + 1) * __indexSize) < _size) ? ('/book/index/' + ( _offset + 1)) : false,
+    whichOne: _offset + 1,
+    pagesNumber: mult(_size, __indexSize),
   };
 
-  res.render('book/index', {title: _titre, lines: _lines, pager: _pager});
+  res.render('book/index', {title: __titre, lines: _lines, pager: _pager});
 });
 
 
@@ -78,7 +128,7 @@ router.get('/book/new', function (req, res){
     article_titre   = req.session.data.titre;
     article_tags    = req.session.data.tags;
     res.render('book/new', {
-      title: _titre,
+      title: __titre,
       content: article_content,
       titre:   article_titre,
       messages: req.flash('info'),
@@ -86,7 +136,7 @@ router.get('/book/new', function (req, res){
     });
   } else {
     req.session.last_url = '/book/new';
-    res.render('book/new', {title: _titre});
+    res.render('book/new', {title: __titre});
   }
 });
 
@@ -95,7 +145,7 @@ router.post('/book/new', function (req, res){
   format = (req.body.fmt_markdown) ? "markdown" : "raw";
 
   req.session.data = {
-    title:    _titre,
+    title:    __titre,
     titre:    req.body.ntitre,
     tags:     req.body.ntags,
     format:   format,
@@ -157,6 +207,7 @@ router.post('/book/preview', function (req, res){
 
         var len = saveFile(file_data, __sha256);
         req.session.files.push(__sha256);
+        req.session.files.sort().reverse();
 
         res.redirect('/book/index');
     }
@@ -180,7 +231,7 @@ router.get('/index', function(req, res) {
   req.session.last_url = req.session.new_url;
   req.session.new_url = '/index';
 
-  res.render('layout', { title: _titre });
+  res.render('layout', { title: __titre });
 });
 
 /*********************************************/

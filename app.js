@@ -39,9 +39,8 @@ app.use(function (req, res, next) {
   } else {
     var _dir           = path.join(process.cwd(),'data');
     files              = fs.readdirSync(_dir);
-    req.session.files  = files.sort().reverse();
-//    console.log(_dir);
-//    files.forEach(function (x) { console.log(x);});
+    req.session.files  = files;
+    req.session.files.sort().reverse();
     req.session.loaded = true;
     next();
   }

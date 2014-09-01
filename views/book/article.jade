@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+  div.units-row
+    div.unit-60.unit-centered
+
+      div.units-row.end
+        div.unit-30
+          h1 #{titre}
+
+      div.units-row
+        div.unit-50.last
+          p #{tags}
+
+      div.units-row
+        div.unit-100
+          !{content}
+
