@@ -21,8 +21,8 @@ var __encoding  = 'utf-8';
 var __dir       = 'data';
 var __data_dir  = path.join(process.cwd(), __dir);
 
-/*********************************************/
-/* BOOK ROUTING *****************************/
+/***********************************************/
+/* BOOK ROUTING ********************************/
 
 
 /* ARTICLE *************************************/
@@ -195,7 +195,7 @@ router.post('/book/preview', function (req, res){
       req.flash('info', 'Title already in use');
       res.redirect('/book/new');
     } else {
-        var __time = Number(os.uptime() * 1000 * 1000).toFixed().toString();
+        var __time = Math.floor(Date.now()).toString();
         var __sha256 = __time + sha256(req.session.data.titre);
         var file_data = {
         titre:   req.session.data.titre,

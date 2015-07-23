@@ -1,7 +1,7 @@
-var path = require('path');
-var os   = require('os');
-var fs   = require('fs');
-var sha256  = require('sha256').x2;
+var path   = require('path');
+var os     = require('os');
+var fs     = require('fs');
+var sha256 = require('sha256').x2;
 
 var _data_dir = 'data';
 
